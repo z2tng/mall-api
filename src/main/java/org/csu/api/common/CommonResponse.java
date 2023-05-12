@@ -41,15 +41,19 @@ public class CommonResponse <T> {
     }
 
     public static <T> CommonResponse<T> createForSuccess() {
-        return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), "SUCCESS");
+        return new CommonResponse<T>(ResponseCode.SUCCESS.getCode());
     }
 
-    public static <T> CommonResponse<T> createForSuccess(String message, T data) {
-        return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), "SUCCESS", data);
+    public static <T> CommonResponse<T> createForSuccessMessage(String message) {
+        return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), message);
     }
 
     public static <T> CommonResponse<T> createForSuccess(T data) {
-        return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), "SUCCESS", data);
+        return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), data);
+    }
+
+    public static <T> CommonResponse<T> createForSuccess(String message, T data) {
+        return new CommonResponse<T>(ResponseCode.SUCCESS.getCode(), message, data);
     }
 
     public static <T> CommonResponse<T> createForError() {
