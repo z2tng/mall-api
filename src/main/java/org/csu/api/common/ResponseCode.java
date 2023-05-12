@@ -3,16 +3,16 @@ package org.csu.api.common;
 import lombok.Getter;
 
 @Getter
-public enum ResponseStatus {
+public enum ResponseCode {
 
-    SUCCESS(0, "成功"),
-    FAIL(1, "失败"),
-    ARGUMENT_INVALID(10, "参数异常");
+    SUCCESS(0, "SUCCESS"),
+    ERROR(1, "ERROR"),
+    ARGUMENT_INVALID(10, "ARGUMENT INVALID");
 
     private final Integer code;
     private final String description;
 
-    ResponseStatus(Integer code, String description) {
+    ResponseCode(Integer code, String description) {
         this.code = code;
         this.description = description;
     }

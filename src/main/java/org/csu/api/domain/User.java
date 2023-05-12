@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 @TableName("mystore_user")
 public class User {
-    @NotBlank(message = "用户ID不能为空")
     private Long id;
     @NotBlank(message = "用户名不能为空")
     private String username;

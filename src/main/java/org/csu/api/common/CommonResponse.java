@@ -11,39 +11,52 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CommonResponse <T> {
 
-    private Integer code;
+    private int code;
     private T data;
     private String message;
 
-    private CommonResponse(Integer code, String message) {
+    private CommonResponse(int code) {
+        this.code = code;
+    }
+
+    private CommonResponse(int code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    private CommonResponse(Integer code, String message, T data) {
+    private CommonResponse(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
+    private CommonResponse(int code, T data) {
+        this.code = code;
+        this.data = data;
+    }
+
     @JsonIgnore
     public boolean isSuccess() {
-        return Objects.equals(this.code, ResponseStatus.SUCCESS.getCode());
+        return Objects.equals(this.code, ResponseCode.SUCCESS.getCode());
     }
 
     public static <T> CommonResponse<T> createForSuccess() {
-        return new CommonResponse<>(ResponseStatus.SUCCESS.getCode(), "SUCCESS");
+        return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), "SUCCESS");
     }
 
     public static <T> CommonResponse<T> createForSuccess(T data) {
-        return new CommonResponse<>(ResponseStatus.SUCCESS.getCode(), "SUCCESS", data);
+        return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), "SUCCESS", data);
     }
 
-    public static <T> CommonResponse<T> createForErrorMessage(String message) {
-        return new CommonResponse<>(ResponseStatus.FAIL.getCode(), message);
+    public static <T> CommonResponse<T> createForError() {
+        return new CommonResponse<T>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDescription());
     }
 
-    public static <T> CommonResponse<T> createForArgumentErrorMessage(String message) {
-        return new CommonResponse<>(ResponseStatus.ARGUMENT_INVALID.getCode(), message);
+    public static <T> CommonResponse<T> createForError(String message) {
+        return new CommonResponse<T>(ResponseCode.ERROR.getCode(), message);
+    }
+
+    public static <T> CommonResponse<T> createForError(int code, String message) {
+        return new CommonResponse<T>(code, message);
     }
 }
