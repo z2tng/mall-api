@@ -44,7 +44,7 @@ public class CommonResponse <T> {
         return new CommonResponse<T>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getDescription());
     }
 
-    public static <T> CommonResponse<T> createForSuccess(String message) {
+    public static <T> CommonResponse<T> createForSuccessMessage(String message) {
         return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), message);
     }
 
