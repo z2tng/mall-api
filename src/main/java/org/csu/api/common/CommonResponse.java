@@ -41,10 +41,10 @@ public class CommonResponse <T> {
     }
 
     public static <T> CommonResponse<T> createForSuccess() {
-        return new CommonResponse<T>(ResponseCode.SUCCESS.getCode());
+        return new CommonResponse<T>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getDescription());
     }
 
-    public static <T> CommonResponse<T> createForSuccessMessage(String message) {
+    public static <T> CommonResponse<T> createForSuccess(String message) {
         return new CommonResponse<>(ResponseCode.SUCCESS.getCode(), message);
     }
 
