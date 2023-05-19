@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @TableName("mystore_user")
 public class User {
-    private Long id;
+    private Integer id;
     @NotBlank(message = "用户名不能为空")
     private String username;
     @NotBlank(message = "密码不能为空")
@@ -20,7 +20,7 @@ public class User {
     private String phone;
     private String question;
     private String answer;
-    private String role;
-    private Date createAt;
-    private Date updateAt;
+    private Integer role;
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
 }
