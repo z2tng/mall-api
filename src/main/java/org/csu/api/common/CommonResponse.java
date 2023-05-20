@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
-import java.util.Objects;
-
 @Getter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CommonResponse <T> {
@@ -57,14 +55,14 @@ public class CommonResponse <T> {
     }
 
     public static <T> CommonResponse<T> createForError() {
-        return new CommonResponse<T>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDescription());
+        return new CommonResponse<>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDescription());
     }
 
     public static <T> CommonResponse<T> createForError(String message) {
-        return new CommonResponse<T>(ResponseCode.ERROR.getCode(), message);
+        return new CommonResponse<>(ResponseCode.ERROR.getCode(), message);
     }
 
     public static <T> CommonResponse<T> createForError(int code, String message) {
-        return new CommonResponse<T>(code, message);
+        return new CommonResponse<>(code, message);
     }
 }

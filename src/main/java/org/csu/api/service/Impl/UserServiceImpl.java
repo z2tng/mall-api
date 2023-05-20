@@ -10,7 +10,6 @@ import org.csu.api.common.CONSTANT;
 import org.csu.api.common.CommonResponse;
 import org.csu.api.domain.User;
 import org.csu.api.dto.RegisterUserDTO;
-import org.csu.api.dto.UpdateUserDTO;
 import org.csu.api.persistence.UserMapper;
 import org.csu.api.vo.UserVO;
 import org.springframework.beans.BeanUtils;

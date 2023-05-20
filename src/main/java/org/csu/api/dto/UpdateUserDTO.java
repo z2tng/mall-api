@@ -1,6 +1,5 @@
 package org.csu.api.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
