@@ -37,7 +37,7 @@ public class CommonResponse <T> {
 
     @JsonIgnore
     public boolean isSuccess() {
-        return Objects.equals(this.code, ResponseCode.SUCCESS.getCode());
+        return this.code == ResponseCode.SUCCESS.getCode();
     }
 
     public static <T> CommonResponse<T> createForSuccess() {
