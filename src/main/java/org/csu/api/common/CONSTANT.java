@@ -1,5 +1,7 @@
 package org.csu.api.common;
 
+import lombok.Getter;
+
 public class CONSTANT {
 
     public static final String LOGIN_USER = "loginUser";
@@ -15,4 +17,22 @@ public class CONSTANT {
         String PHONE = "phone";
         String EMAIL = "email";
     }
+
+    @Getter
+    public enum ProductStatus {
+        ON_SALE(1, "on_sale"),
+        TAKE_DOWN(2, "take_down"),
+        DELETE(3, "delete");
+
+        private final int code;
+        private final String description;
+
+        ProductStatus(int code, String description) {
+            this.code = code;
+            this.description = description;
+        }
+    }
+
+    public static final String PRODUCT_ORDER_BY_PRICE_ASC = "price_asc";
+    public static final String PRODUCT_ORDER_BY_PRICE_DESC = "price_desc";
 }
