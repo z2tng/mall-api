@@ -1,6 +1,5 @@
 package org.csu.api.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 @Data
