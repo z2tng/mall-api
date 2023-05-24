@@ -35,4 +35,9 @@ public class CONSTANT {
 
     public static final String PRODUCT_ORDER_BY_PRICE_ASC = "price_asc";
     public static final String PRODUCT_ORDER_BY_PRICE_DESC = "price_desc";
+
+    public interface CART_ITEM_STATUS {
+        int UNCHECKED = 0;
+        int CHECKED = 1;
+    }
 }
