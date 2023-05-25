@@ -9,6 +9,8 @@ import org.csu.api.dto.PostAddressDTO;
 import org.csu.api.dto.UpdateAddressDTO;
 import org.csu.api.persistence.AddressMapper;
 import org.csu.api.service.AddressService;
+import org.csu.api.utils.ListBeanUtils;
+import org.csu.api.vo.AddressVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class AddressServiceImpl implements AddressService {
     private AddressMapper addressMapper;
 
     @Override
-    public CommonResponse<Address> addAddress(Integer userId, PostAddressDTO postAddressDTO) {
+    public CommonResponse<AddressVO> addAddress(Integer userId, PostAddressDTO postAddressDTO) {
         Address address = new Address();
         BeanUtils.copyProperties(postAddressDTO, address);
         address.setUserId(userId);
@@ -34,7 +36,10 @@ public class AddressServiceImpl implements AddressService {
         if (result == 0) {
             CommonResponse.createForError("服务器异常，添加地址失败");
         }
-        return CommonResponse.createForSuccess(ResponseCode.SUCCESS.getDescription(), address);
+
+        AddressVO addressVO = new AddressVO();
+        BeanUtils.copyProperties(address, addressVO);
+        return CommonResponse.createForSuccess(ResponseCode.SUCCESS.getDescription(), addressVO);
     }
 
     @Override
@@ -50,7 +55,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public CommonResponse<Address> updateAddress(Integer userId, UpdateAddressDTO updateAddressDTO) {
+    public CommonResponse<AddressVO> updateAddress(Integer userId, UpdateAddressDTO updateAddressDTO) {
         // 校验地址是否存在
         QueryWrapper<Address> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", updateAddressDTO.getId())
@@ -68,28 +73,34 @@ public class AddressServiceImpl implements AddressService {
             if (result == 0) {
                 return CommonResponse.createForError("服务器异常，更新地址失败");
             }
-            return CommonResponse.createForSuccess(ResponseCode.SUCCESS.getDescription(), address);
+
+            AddressVO addressVO = new AddressVO();
+            BeanUtils.copyProperties(address, addressVO);
+            return CommonResponse.createForSuccess(ResponseCode.SUCCESS.getDescription(), addressVO);
         }
         return CommonResponse.createForError("该地址不存在");
     }
 
     @Override
-    public CommonResponse<Address> findAddress(Integer userId, Integer addressId) {
+    public CommonResponse<AddressVO> findAddress(Integer userId, Integer addressId) {
         QueryWrapper<Address> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", addressId)
                 .eq("user_id", userId);
         Address address = addressMapper.selectOne(queryWrapper);
         if (address != null) {
-            return CommonResponse.createForSuccess(ResponseCode.SUCCESS.getDescription(), address);
+            AddressVO addressVO = new AddressVO();
+            BeanUtils.copyProperties(address, addressVO);
+            return CommonResponse.createForSuccess(ResponseCode.SUCCESS.getDescription(), addressVO);
         }
         return CommonResponse.createForError("该地址不存在");
     }
 
     @Override
-    public CommonResponse<List<Address>> listAddress(Integer userId) {
+    public CommonResponse<List<AddressVO>> listAddress(Integer userId) {
         QueryWrapper<Address> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId);
         List<Address> addressList = addressMapper.selectList(queryWrapper);
-        return CommonResponse.createForSuccess(ResponseCode.SUCCESS.getDescription(), addressList);
+        List<AddressVO> addressVOList = ListBeanUtils.copyProperties(addressList, AddressVO::new);
+        return CommonResponse.createForSuccess(ResponseCode.SUCCESS.getDescription(), addressVOList);
     }
 }

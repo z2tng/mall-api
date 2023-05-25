@@ -5,11 +5,11 @@ import jakarta.validation.Valid;
 import org.csu.api.common.CONSTANT;
 import org.csu.api.common.CommonResponse;
 import org.csu.api.common.ResponseCode;
-import org.csu.api.domain.Address;
 import org.csu.api.dto.PostAddressIdDTO;
 import org.csu.api.dto.PostAddressDTO;
 import org.csu.api.dto.UpdateAddressDTO;
 import org.csu.api.service.AddressService;
+import org.csu.api.vo.AddressVO;
 import org.csu.api.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +27,8 @@ public class AddressController {
     private AddressService addressService;
 
     @PostMapping("add")
-    public CommonResponse<Address> addAddress(@Valid @RequestBody PostAddressDTO postAddressDTO,
-                                              HttpSession session) {
+    public CommonResponse<AddressVO> addAddress(@Valid @RequestBody PostAddressDTO postAddressDTO,
+                                                HttpSession session) {
         UserVO loginUser = (UserVO) session.getAttribute(CONSTANT.LOGIN_USER);
         if (loginUser == null) {
             return CommonResponse.createForError(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
@@ -49,7 +49,7 @@ public class AddressController {
     }
 
     @PostMapping("update")
-    public CommonResponse<Address> updateAddress(@Valid @RequestBody UpdateAddressDTO updateAddressDTO,
+    public CommonResponse<AddressVO> updateAddress(@Valid @RequestBody UpdateAddressDTO updateAddressDTO,
                                                 HttpSession session) {
         UserVO loginUser = (UserVO) session.getAttribute(CONSTANT.LOGIN_USER);
         if (loginUser == null) {
@@ -60,7 +60,7 @@ public class AddressController {
     }
 
     @PostMapping("find")
-    public CommonResponse<Address> findAddress(@Valid @RequestBody PostAddressIdDTO postAddressIdDTO,
+    public CommonResponse<AddressVO> findAddress(@Valid @RequestBody PostAddressIdDTO postAddressIdDTO,
                                                 HttpSession session) {
         UserVO loginUser = (UserVO) session.getAttribute(CONSTANT.LOGIN_USER);
         if (loginUser == null) {
@@ -71,7 +71,7 @@ public class AddressController {
     }
 
     @PostMapping("list")
-    public CommonResponse<List<Address>> deleteAddress(HttpSession session) {
+    public CommonResponse<List<AddressVO>> deleteAddress(HttpSession session) {
         UserVO loginUser = (UserVO) session.getAttribute(CONSTANT.LOGIN_USER);
         if (loginUser == null) {
             return CommonResponse.createForError(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
