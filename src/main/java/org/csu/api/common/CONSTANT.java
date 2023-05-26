@@ -40,4 +40,28 @@ public class CONSTANT {
         int UNCHECKED = 0;
         int CHECKED = 1;
     }
+
+    public interface PAYMENT_TYPE {
+        int ALIPAY = 1;
+        int WECHAT_PAY = 2;
+        int OTHER = 3;
+    }
+
+    @Getter
+    public enum OrderStatus {
+        CANCELED(1, "canceled"),
+        NOT_PAID(2, "not_paid"),
+        PAID(3, "paid"),
+        SHIPPED(2, "shipped"),
+        SUCCESS(2, "success"),
+        CLOSED(2, "closed"),;
+
+        private final int code;
+        private final String description;
+
+        OrderStatus(int code, String description) {
+            this.code = code;
+            this.description = description;
+        }
+    }
 }
