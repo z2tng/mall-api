@@ -71,7 +71,7 @@ public class AddressController {
     }
 
     @PostMapping("list")
-    public CommonResponse<List<AddressVO>> deleteAddress(HttpSession session) {
+    public CommonResponse<List<AddressVO>> listAddress(HttpSession session) {
         UserVO loginUser = (UserVO) session.getAttribute(CONSTANT.LOGIN_USER);
         if (loginUser == null) {
             return CommonResponse.createForError(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());

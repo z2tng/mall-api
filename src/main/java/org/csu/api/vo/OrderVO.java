@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class OrderVO {
     private Integer id;
-    private Long orderNo;
+    private String orderNo;
     private Integer userId;
 
     private BigDecimal paymentPrice;

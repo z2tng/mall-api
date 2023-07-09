@@ -16,6 +16,8 @@ import org.csu.api.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
+
 @RestController
 @RequestMapping("/order/")
 public class OrderController {
@@ -45,7 +47,7 @@ public class OrderController {
     }
 
     @GetMapping("detail")
-    public CommonResponse<OrderVO> getOrderDetail(@RequestParam @NotBlank(message = "订单号不能为空") Long orderNo,
+    public CommonResponse<OrderVO> getOrderDetail(@RequestParam @NotBlank(message = "订单号不能为空") BigInteger orderNo,
                                                          HttpSession session) {
         UserVO loginUser = (UserVO) session.getAttribute(CONSTANT.LOGIN_USER);
         if (loginUser == null) {

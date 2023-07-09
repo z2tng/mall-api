@@ -27,6 +27,6 @@ public class User {
     private Integer role;
     @TableField(value = "create_time")
     private LocalDateTime createTime;
-    @TableField(value = "create_time")
+    @TableField(value = "update_time")
     private LocalDateTime updateTime;
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.csu.api.common.CONSTANT;
 import org.csu.api.common.CommonResponse;
 import org.csu.api.common.ResponseCode;
@@ -20,9 +21,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
-import java.util.UUID;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
@@ -70,9 +73,14 @@ public class OrderServiceImpl implements OrderService {
 
         //4. 创建订单
         Order order = new Order();
-        int orderNo = UUID.randomUUID().hashCode();
-        orderNo = orderNo < 0 ? -orderNo : orderNo;
-        order.setOrderNo((long) orderNo);
+
+        // 生成订单号
+        Instant instant = LocalDateTime.now().toInstant(ZoneOffset.UTC);
+        long timeStampSeconds = instant.getEpochSecond();
+        String randomNumeric = RandomStringUtils.randomNumeric(9);
+        BigInteger orderNo = new BigInteger(timeStampSeconds + randomNumeric);
+
+        order.setOrderNo(orderNo);
         order.setUserId(userId);
         order.setAddressId(address.getId());
         order.setPaymentPrice(cartVO.getCartTotalPrice());
@@ -142,7 +150,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public CommonResponse<OrderVO> getOrderDetail(Long orderNo, Integer userId) {
+    public CommonResponse<OrderVO> getOrderDetail(BigInteger orderNo, Integer userId) {
         OrderVO orderVO = this.getOrderVO(orderNo, userId);
         return CommonResponse.createForSuccess(ResponseCode.SUCCESS.getDescription(), orderVO);
     }
@@ -155,13 +163,15 @@ public class OrderServiceImpl implements OrderService {
                 .orderByDesc("create_time");
         result = orderMapper.selectPage(result, queryWrapper);
 
-        Page<OrderVO> orderVOPage = ListBeanUtilsForPage.copyProperties(result, OrderVO::new, (order, orderVO) -> {
+        Page<OrderVO> orderVOPage = ListBeanUtilsForPage.copyPageList(result, OrderVO::new, (order, orderVO) -> {
             BeanUtils.copyProperties(order, orderVO);
+            orderVO.setOrderNo(String.valueOf(order.getOrderNo()));
             // 地址信息
             Address address = addressMapper.selectById(order.getAddressId());
             if (address != null) {
                 AddressVO addressVO = new AddressVO();
                 BeanUtils.copyProperties(address, addressVO);
+                orderVO.setAddressVO(addressVO);
             }
             // 订单项信息
             QueryWrapper<OrderItem> queryWrapper2 = new QueryWrapper<>();
@@ -214,7 +224,7 @@ public class OrderServiceImpl implements OrderService {
         return true;
     }
 
-    private OrderVO getOrderVO(Long orderNo, Integer userId) {
+    private OrderVO getOrderVO(BigInteger orderNo, Integer userId) {
         OrderVO orderVO = new OrderVO();
 
         // 订单信息
@@ -224,6 +234,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.selectOne(queryWrapper);
         if (order != null) {
             BeanUtils.copyProperties(order, orderVO);
+            orderVO.setOrderNo(String.valueOf(order.getOrderNo()));
 
             // 地址信息
             Address address = addressMapper.selectById(order.getAddressId());

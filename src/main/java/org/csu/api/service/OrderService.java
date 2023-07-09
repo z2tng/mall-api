@@ -5,6 +5,8 @@ import org.csu.api.common.CommonResponse;
 import org.csu.api.vo.OrderPrepareVO;
 import org.csu.api.vo.OrderVO;
 
+import java.math.BigInteger;
+
 public interface OrderService {
 
     //创建订单
@@ -14,7 +16,7 @@ public interface OrderService {
     CommonResponse<OrderPrepareVO> listCartItem(Integer userId);
 
     //获取订单详情
-    CommonResponse<OrderVO> getOrderDetail(Long orderNo, Integer userId);
+    CommonResponse<OrderVO> getOrderDetail(BigInteger orderNo, Integer userId);
 
     //获取订单列表
     CommonResponse<Page<OrderVO>> listOrder(Integer userId, Integer pageNum, Integer pageSize);

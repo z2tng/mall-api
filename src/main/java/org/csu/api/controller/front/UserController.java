@@ -37,7 +37,7 @@ public class UserController {
         return userService.checkField(checkUserFieldDTO.getFieldName(), checkUserFieldDTO.getFieldValue());
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public CommonResponse<String> register(@Valid @RequestBody RegisterUserDTO registerUserDTO) {
         return userService.register(registerUserDTO);
     }

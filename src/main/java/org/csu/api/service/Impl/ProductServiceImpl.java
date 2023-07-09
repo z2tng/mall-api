@@ -73,7 +73,10 @@ public class ProductServiceImpl implements ProductService {
 
         }
 
-        Page<Product> result = new Page<>(pageNum, pageSize);
+        Page<Product> result = new Page<>();
+        result.setCurrent(pageNum);
+        result.setSize(pageSize);
+
         QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
 
         //2. 拼接查询条件
@@ -98,9 +101,7 @@ public class ProductServiceImpl implements ProductService {
         result = productMapper.selectPage(result, queryWrapper);
 
         //5. 封装结果集
-        Page<ProductListVO> productListVOPage = ListBeanUtilsForPage.copyProperties(result, ProductListVO::new, (product, productListVO) -> {
-            productListVO.setImageServer(imageServerConfig.getUrl());
-        });
+        Page<ProductListVO> productListVOPage = ListBeanUtilsForPage.copyPageList(result, ProductListVO::new, (product, productListVO) -> productListVO.setImageServer(imageServerConfig.getUrl()));
         return CommonResponse.createForSuccess(productListVOPage);
     }
 

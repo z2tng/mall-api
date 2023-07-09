@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,7 +18,7 @@ public class OrderItem {
     @TableField("user_id")
     private Integer userId;
     @TableField("order_no")
-    private Long orderNo;
+    private BigInteger orderNo;
 
     @TableField("product_id")
     private Integer productId;

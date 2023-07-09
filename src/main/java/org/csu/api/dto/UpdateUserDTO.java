@@ -8,7 +8,6 @@ import lombok.Data;
 public class UpdateUserDTO {
     @NotNull(message = "用户名不能为空")
     private String username;
-    private String password;
     @NotBlank(message = "邮箱不能为空")
     private String email;
     @NotBlank(message = "手机号不能为空")
